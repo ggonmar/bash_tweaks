@@ -1,0 +1,47 @@
+# Tired of services and processes locking specific ports? kill them away!
+# usage: kill_port 443
+
+function kill_port {
+pid=$(lsof -i | grep $1 | awk {'print $2'})
+if [ -z "$pid" ];
+  then 
+	echo "Nothing listening on port $1"
+else
+	kill -9 $pid
+	echo "Killed process $pid listening on port $1"
+fi
+}
+
+# Always going to google to know your external ip? wouldn't you love having it on your terminal fingertips?
+
+function my_ip {
+	dig +short myip.opendns.com @resolver1.opendns.com
+}
+
+
+# Like a clean terminal, with an obliging butler tone greeting you in?
+clear
+h=`date +%H`
+if [ $h -lt 12 ]; then
+  GREETINGS="Good morning"
+elif [ $h -lt 18 ]; then
+  GREETINGS="Good afternoon"
+else
+  GREETINGS="Good evening"
+fi
+HOUR_OF_GREETING=`date "+%k:%M"`
+echo "$GREETINGS, Sir. It's $HOUR_OF_GREETING.
+Travis up and ready."
+
+
+
+# For some reason your multiple screens get f up and need to reset them back to how they are expected to be?
+alias set_screens="xrandr --auto --output USB-C-0.1 --right-of USB-C-0.2"
+
+
+# Have that meme you use millions of times with different texts? I sure do. Simply automate generating those memes already
+function spongebob() {
+	curl -gs --data-urlencode "template_id=182442076"  --data-urlencode "username=<<USERNAME HERE>>" --data-urlencode "password=<<PASSWORD HERE>>" --data-urlencode "boxes[0][text]=$1" --request POST "https://api.imgflip.com/caption_image" | jq -r '.data.url'
+}
+
+
