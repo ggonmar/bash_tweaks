@@ -1,0 +1,10 @@
+# Same thing about the meme you keep using, but for espanso
+
+- regex: ":sb\\((?P<meme>.*)\\)"
+  replace: "{{meme_result}}"
+  vars:
+    - name: meme_result
+      type: shell
+      params:
+        cmd: "curl -gs --data-urlencode \"template_id=182442076\"  --data-urlencode \"username=<<USERNAME>>\" --data-urlencode \"password=<<PASSWORD>>\" --data-urlencode \"boxes[0][text]={{meme}}\" --request POST \"https://api.imgflip.com/caption_image\" | jq -r '.data.url'"
+  word: true
